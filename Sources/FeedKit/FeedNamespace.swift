@@ -118,27 +118,25 @@ extension FeedNamespace {
   func shouldInclude(in feed: RSSFeed) -> Bool {
     switch self {
     case .dublinCore:
-      feed.channel?.dublinCore != nil ||
-        feed.channel?.items?.contains(where: { $0.dublinCore != nil }) ?? false
+      feed.channel?.dublinCore != nil ||  false
 
     case .itunes:
-      feed.channel?.iTunes != nil ||
-        feed.channel?.items?.contains(where: { $0.iTunes != nil }) ?? false
+      feed.channel?.iTunes != nil || false
 
     case .syndication:
       feed.channel?.syndication != nil
 
     case .media:
-      feed.channel?.items?.contains(where: { $0.media != nil }) ?? false
+       false
 
     case .content:
-      feed.channel?.items?.contains(where: { $0.content != nil }) ?? false
+      false
 
     case .georss:
-      feed.channel?.items?.contains(where: { $0.media?.location?.geoRSS != nil }) ?? false
+      false
 
     case .gml:
-      feed.channel?.items?.contains(where: { $0.media?.location?.geoRSS?.gmlPoint != nil }) ?? false
+      false
 
     case .youTube:
       false
