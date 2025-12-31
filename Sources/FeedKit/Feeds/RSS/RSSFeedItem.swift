@@ -32,6 +32,7 @@ import Foundation
 /// the link and title may be omitted. All elements of an item are optional,
 /// however at least one of title or description must be present.
 public struct RSSFeedItem {
+    public var guid: String
     public var title: String
     public var link: String?
     public var description: String?
@@ -56,6 +57,7 @@ extension RSSFeedItem: Hashable {}
 
 extension RSSFeedItem: Codable {
     private enum CodingKeys: String, CodingKey {
+        case guid
         case title
         case link
         case description
@@ -67,6 +69,7 @@ extension RSSFeedItem: Codable {
     public init(from decoder: any Decoder) throws {
         let container: KeyedDecodingContainer<RSSFeedItem.CodingKeys> = try decoder.container(keyedBy: CodingKeys.self)
         
+        guid = try container.decode(String.self, forKey: CodingKeys.guid)
         title = try container.decode(String.self, forKey: CodingKeys.title)
         link = try container.decodeIfPresent(String.self, forKey: CodingKeys.link)
         description = try container.decodeIfPresent(String.self, forKey: CodingKeys.description)
@@ -78,6 +81,7 @@ extension RSSFeedItem: Codable {
     public func encode(to encoder: any Encoder) throws {
         var container: KeyedEncodingContainer<RSSFeedItem.CodingKeys> = encoder.container(keyedBy: CodingKeys.self)
         
+        try container.encodeIfPresent(guid, forKey: .guid)
         try container.encodeIfPresent(title, forKey: .title)
         try container.encodeIfPresent(link, forKey: .link)
         try container.encodeIfPresent(description, forKey: .description)
